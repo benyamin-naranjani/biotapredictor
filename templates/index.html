@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMILES Prediction</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        textarea { width: 100%; height: 100px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+    <h2>Enter SMILES Strings</h2>
+    <form action="/predict" method="post">
+        <textarea name="smiles" placeholder="Enter SMILES strings, one per line"></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if results %}
+    <h2>Results</h2>
+    <table>
+        <tr>
+            <th>SMILES</th>
+            <th>AZ_PC Class</th>
+            <th>AZ_PC Probability</th>
+            <th>AZ_all Class</th>
+            <th>AZ_all Probability</th>
+            <th>integrated_PC Class</th>
+            <th>integrated_PC Probability</th>
+            <th>integrated_all Class</th>
+            <th>integrated_all Probability</th>
+        </tr>
+        {% for row in results %}
+        <tr>
+            <td>{{ row["SMILES"] }}</td>
+            <td>{{ row["AZ_PC_class"] }}</td>
+            <td>{{ row["AZ_PC_prob"] }}</td>
+            <td>{{ row["AZ_all_class"] }}</td>
+            <td>{{ row["AZ_all_prob"] }}</td>
+            <td>{{ row["integrated_PC_class"] }}</td>
+            <td>{{ row["integrated_PC_prob"] }}</td>
+            <td>{{ row["integrated_all_class"] }}</td>
+            <td>{{ row["integrated_all_prob"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+</body>
+</html>
