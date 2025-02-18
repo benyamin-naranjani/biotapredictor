@@ -8,22 +8,14 @@ from sklearn.impute import SimpleImputer
 
 app = Flask(__name__)
 
-### Load Models & Feature Sets from Environment Variables
+### Load Models & Feature Sets
 models_info = [
-    {"name": "AZ_PC", "model_file": os.getenv("MODEL_PATH_AZ_PC", "models/AZ_PC.pkl"),
-     "feature_file": os.getenv("FEATURE_PATH_AZ_PC", "features/feature_selection_lr_rfe_df_a_f.pkl")},
-    
-    {"name": "AZ_all", "model_file": os.getenv("MODEL_PATH_AZ_ALL", "models/AZ_all.pkl"),
-     "feature_file": os.getenv("FEATURE_PATH_AZ_ALL", "features/feature_selection_lr_rfe_df_a_f_all.pkl")},
-    
-    {"name": "integrated_PC", "model_file": os.getenv("MODEL_PATH_INTEGRATED_PC", "models/integrated_PC.pkl"),
-     "feature_file": os.getenv("FEATURE_PATH_INTEGRATED_PC", "features/feature_selection_brf_rfe_df_a_f.pkl")},
-    
-    {"name": "integrated_all", "model_file": os.getenv("MODEL_PATH_INTEGRATED_ALL", "models/integrated_all.pkl"),
-     "feature_file": os.getenv("FEATURE_PATH_INTEGRATED_ALL", "features/feature_selection_brf_rfe_df_a_f_all.pkl")}
+    {"name": "AZ_PC", "model_file": "AZ_PC.pkl", "feature_file": "feature_selection_lr_rfe_df_a_f.pkl"},
+    {"name": "AZ_all", "model_file": "AZ_all.pkl", "feature_file": "feature_selection_lr_rfe_df_a_f_all.pkl"},
+    {"name": "integrated_PC", "model_file": "integrated_PC.pkl", "feature_file": "feature_selection_brf_rfe_df_a_f.pkl"},
+    {"name": "integrated_all", "model_file": "integrated_all.pkl", "feature_file": "feature_selection_brf_rfe_df_a_f_all.pkl"}
 ]
 
-# Load Models & Feature Sets
 for model_info in models_info:
     with open(model_info["feature_file"], 'rb') as file:
         model_info["feature_set"] = pickle.load(file)
@@ -81,10 +73,9 @@ def predict():
     writer.close()
     
     # Run PaDEL Descriptor
-    padel_jar = os.getenv("PADEL_JAR_PATH", "PaDEL-Descriptor.jar")
-    xml_file = os.getenv("FINGERPRINTS_XML", "fingerprints.xml")
     output_csv = "test5_all_descriptors"
-
+    xml_file = "fingerprints.xml"
+    padel_jar = "PaDEL-Descriptor.jar"
     os.system(f'java -jar {padel_jar} -dir {sdf_filename} -file {output_csv} -2d -3d -fingerprints -retain3d -retainorder -detectaromaticity -standardizenitro -descriptortypes {xml_file}')
     
     test_data = pd.read_csv(output_csv)
@@ -104,17 +95,12 @@ def predict():
             y_pred = model_info["model"].predict(X_test)
             y_prob = model_info["model"].predict_proba(X_test)[:, 1]
             
-            if i < len(y_pred):  # Prevent IndexError
-                row[f"{model_name}_class"] = int(y_pred[i])
-                row[f"{model_name}_prob"] = round(float(y_prob[i]), 4)
-            else:
-                row[f"{model_name}_class"] = "N/A"
-                row[f"{model_name}_prob"] = "N/A"
+            row[f"{model_name}_class"] = y_pred[i]
+            row[f"{model_name}_prob"] = round(y_prob[i], 4)
         
         results_table.append(row)
-
+    
     return render_template('index.html', results=results_table)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 10000))  # Use PORT from environment
-    app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(debug=True)
