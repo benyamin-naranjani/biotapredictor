@@ -104,6 +104,7 @@ def predict():
 
 import os
 
+
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 10000))  # Get the port from Render
+    port = int(os.environ.get("PORT", 10000))  # Use PORT from Render
     app.run(debug=True, host='0.0.0.0', port=port)
