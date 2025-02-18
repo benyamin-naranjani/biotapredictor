@@ -103,5 +103,5 @@ def predict():
     return render_template('index.html', results=results_table)
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))  # Use 8080 instead of 10000
+    port = int(os.environ.get("PORT", 10000))  # Get port from Render's environment
     app.run(host="0.0.0.0", port=port, debug=True)
