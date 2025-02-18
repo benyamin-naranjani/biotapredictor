@@ -25,5 +25,5 @@ ENV PORT=8080
 # Expose the port (Render will forward requests to this port)
 EXPOSE 8080
 
-# Start the app using Gunicorn with 1 worker and a 120-second timeout
-CMD ["gunicorn", "-w", "1", "--timeout", "120", "-b", "0.0.0.0:8080", "app:app"]
+# Start the app using Gunicorn with 1 worker and a 1200-second timeout
+CMD ["gunicorn", "-w", "1", "--timeout", "1200", "-b", "0.0.0.0:8080", "app:app"]
