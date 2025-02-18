@@ -72,11 +72,15 @@ def predict():
             writer.write(molecule, confId=lowest_energy_confId)
     writer.close()
     
+    # Install Java on Render if missing
+    os.system("apt-get update && apt-get install -y default-jre")
+    
     # Run PaDEL Descriptor
     output_csv = "test5_all_descriptors"
     xml_file = "fingerprints.xml"
-    padel_jar = "PaDEL-Descriptor.jar"
-    os.system(f'java -jar {padel_jar} -dir {sdf_filename} -file {output_csv} -2d -3d -fingerprints -retain3d -retainorder -detectaromaticity -standardizenitro -descriptortypes {xml_file}')
+    padel_jar_path = "/opt/render/project/src/PaDEL-Descriptor.jar"  # Ensure correct path
+    command = f'java -jar {padel_jar_path} -dir {sdf_filename} -file {output_csv} -2d -3d -fingerprints -retain3d -retainorder -detectaromaticity -standardizenitro -descriptortypes {xml_file}'
+    os.system(command)
     
     test_data = pd.read_csv(output_csv)
     if 'Name' in test_data.columns:
@@ -103,4 +107,5 @@ def predict():
     return render_template('index.html', results=results_table)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 10000))  # Use PORT from environment
+    app.run(debug=True, host='0.0.0.0', port=port)
