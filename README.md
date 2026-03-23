@@ -8,7 +8,7 @@ This project combines **cheminformatics**, **machine learning**, and **deployabl
 
 **Live demo:** [biotapredictor.onrender.com](https://biotapredictor.onrender.com/)
 
-![BiotaPredictor workflow](images/biotapredictor_workflow.png)
+![BiotaPredictor workflow](images/biotapredictor_workflow.svg)
 
 ## workflow
 
