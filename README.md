@@ -2,7 +2,7 @@
 
 **BiotaPredictor** is a containerised machine-learning platform for predicting **gut microbial drug depletion** from molecular structure.
 
-The pipeline takes **SMILES input**, generates optimized **3D conformers**, computes **17,968 molecular descriptors** using **PaDEL**, and returns **depletion probability predictions** from four tuned machine-learning models.
+The pipeline takes **SMILES input**, generates optimised **3D conformers**, computes **17,968 molecular descriptors** using **PaDEL**, and returns **depletion probability predictions** from four tuned machine-learning models.
 
 This project combines **cheminformatics**, **machine learning**, and **deployable scientific software** to support microbiome-aware drug discovery workflows.
 
