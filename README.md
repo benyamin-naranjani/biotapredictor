@@ -8,8 +8,9 @@ This project combines **cheminformatics**, **machine learning**, and **deployabl
 
 **Live demo:** [biotapredictor.onrender.com](https://biotapredictor.onrender.com/)
 
-![BiotaPredictor workflow](images/biotapredictor_workflow.png)
-
+<p align="center">
+  <img src="images/biotapredictor_workflow.png" alt="BiotaPredictor workflow" width="650">
+</p>
 ## workflow
 
 - **SMILES input** — user-submitted molecular structure via web interface  
