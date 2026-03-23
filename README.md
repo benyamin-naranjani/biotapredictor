@@ -11,6 +11,7 @@ This project combines **cheminformatics**, **machine learning**, and **deployabl
 <p align="center">
   <img src="images/biotapredictor_workflow.png" alt="BiotaPredictor workflow" width="400">
 </p>
+
 ## workflow
 
 - **SMILES input** — user-submitted molecular structure via web interface  
